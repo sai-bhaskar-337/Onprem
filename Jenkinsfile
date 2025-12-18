@@ -11,7 +11,7 @@ pipeline {
 
         stage('Build & Test') {
             steps {
-                dir('apache-php') {
+                dir('app') {
                     // Start the services defined in docker-compose.yml
                     sh 'docker-compose up -d --build'
                     // Add a simple test, e.g., check if the web service is reachable
@@ -22,7 +22,7 @@ pipeline {
 
         stage('Cleanup') {
             steps {
-                dir('apache-php') {
+                dir('app') {
                     // Stop and remove the running containers
                     sh 'docker-compose down'
                 }
