@@ -14,8 +14,8 @@ pipeline {
                     // Build and start container
                     bat 'docker-compose up -d --build'
                     
-                    // Wait 10 seconds for container to start
-                    bat 'timeout /t 10'
+                    // Wait 10 seconds for container to start (using ping instead of timeout)
+                    bat 'ping 127.0.0.1 -n 11 >nul'
                     
                     // Test if service is responding
                     bat 'curl -f http://localhost:80 || exit /b 1'
