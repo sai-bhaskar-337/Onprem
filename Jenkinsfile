@@ -11,9 +11,14 @@ pipeline {
         stage('Build & Test') {
             steps {
                 dir('app') {
-                    // Use 'bat' instead of 'sh' for Windows
+                    // Build and start container
                     bat 'docker-compose up -d --build'
-                    bat 'timeout /t 10 && curl -f http://localhost:80 || exit /b 1'
+                    
+                    // Wait 10 seconds for container to start
+                    bat 'timeout /t 10'
+                    
+                    // Test if service is responding
+                    bat 'curl -f http://localhost:80 || exit /b 1'
                 }
             }
         }
